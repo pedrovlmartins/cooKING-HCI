@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CooKING</title>
+    <link rel="stylesheet" href="../bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../bootstrap.min.js"></script>
+    <script src="../bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="../bootstrap-multiselect.css">
+    <!--<link href='http://fonts.googleapis.com/css?family=Lato:400,600,700' rel='stylesheet' type='text/css'>-->
+    <link rel="stylesheet" href="../css/style.css">
+    <script src="../js/main.js"></script>
+</head>
+<body>
+<script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.5.0/annyang.min.js"></script>
+<script>
+    if (annyang) {
+        //set true for annyang debug mode
+        let DEBUG = true;
+        var commands = {
+            'next step': function() {
+                $('#recipeview div div ul.pagination li.active').next().children().click();
+            },
+            'previous step': function() {
+                $('#recipeview div div ul.pagination li.active').prev().children().click();
+            },
+            'next recipe': function() {
+                $('#recipe-nav-next').click();
+            },
+            'previous recipe': function() {
+                $('#recipe-nav-prev').click();
+            },
+            'search by ingredients': function(){
+                $('#navbar li:nth-child(2) > a').click();
+                $('#ingredientsearch-search').click();
+            },
+            'search *tag': searchNormal,
+            'select *tag': selectValue,
+            'add to shopping list': function(){
+                $('#textsearch-add-ingredients').click();
+            },
+            'add from last recipe': function(){
+                $('#groceries-add-ingredients').click();
+            },
+            'clear shopping list': function(){
+                $('#groceriesClearList').click();
+            },
+            'clear ingredients': function(){
+                $('#ingredientSelectClear').click();
+            },
+            'go to search by ingredients': function() {
+                $('#navbar li:nth-child(2) > a').click();
+            },
+            'go to search by text': function() {
+                $('#navbar li:nth-child(1) > a').click();
+            },
+            'go to my shopping list': function() {
+                $('#navbar li:nth-child(3) > a').click();
+            }
+        };
+        if(DEBUG){
+            annyang.debug();
+        }
+        annyang.addCommands(commands);
+        annyang.start();
+    }
+</script>
+    <div class="container-fluid full-height">
+        <div class="modal" id="splash" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="background-color: #66101f">
+                    <div class="modal-header" style="text-align:center">
+
+
+                    </div>
+                    <div class="modal-body" style="color:#c6bfc0; text-align:center">
+                        <div class="row">
+                            <div class="col-md-12 col-xs-12 col-sm-12">
+                                <img style="margin-top:50px;" height="300px" src="../img/cookinglarge.png"/><br><br><br>
+                                Welcome to CooKING, loading application..
+                                <div class="progress" style="margin-top: 30px;">
+                                    <div id="testbar"class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0;%">
+                                        Loading..
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="background-color: #c6bfc0;">
+                    <div class="modal-header">
+                        <img style="margin-top: 7px; display: block;" height="50px" src="../img/cookingsmall.png"/>
+                        Welcome to CooKING, before we start we would like you to ask you for some information.
+                    </div>
+                    <div class="modal-body" style="min-height: 455px;">
+                        <div class="row" style="padding-bottom: 7%;padding-top: 6%;">
+                            <div class="col-md-4 col-xs-4 col-sm-4">
+
+                            </div>
+                            <div class="col-md-4 col-xs-4 col-sm-4" style="text-align: center;">
+                                <label>Which country are you currently in?</label>
+                                <br>
+                                <select id="countrySelect">
+                                    <option value="AF">Afghanistan</option>
+                                    <option value="AX">Åland Islands</option>
+                                    <option value="AL">Albania</option>
+                                    <option value="DZ">Algeria</option>
+                                    <option value="AS">American Samoa</option>
+                                    <option value="AD">Andorra</option>
+                                    <option value="AO">Angola</option>
+                                    <option value="AI">Anguilla</option>
+                                    <option value="AQ">Antarctica</option>
+                                    <option value="AG">Antigua and Barbuda</option>
+                                    <option value="AR">Argentina</option>
+                                    <option value="AM">Armenia</option>
+                                    <option value="AW">Aruba</option>
+                                    <option value="AU">Australia</option>
+                                    <option value="AT">Austria</option>
+                                    <option value="AZ">Azerbaijan</option>
+                                    <option value="BS">Bahamas</option>
+                                    <option value="BH">Bahrain</option>
+                                    <option value="BD">Bangladesh</option>
+                                    <option value="BB">Barbados</option>
+                                    <option value="BY">Belarus</option>
+                                    <option value="BE">Belgium</option>
+                                    <option value="BZ">Belize</option>
+                                    <option value="BJ">Benin</option>
+                                    <option value="BM">Bermuda</option>
+                                    <option value="BT">Bhutan</option>
+                                    <option value="BO">Bolivia, Plurinational State of</option>
+                                    <option value="BQ">Bonaire, Sint Eustatius and Saba</option>
+                                    <option value="BA">Bosnia and Herzegovina</option>
+                                    <option value="BW">Botswana</option>
+                                    <option value="BV">Bouvet Island</option>
+                                    <option value="BR">Brazil</option>
+                                    <option value="IO">British Indian Ocean Territory</option>
+                                    <option value="BN">Brunei Darussalam</option>
+                                    <option value="BG">Bulgaria</option>
+                                    <option value="BF">Burkina Faso</option>
+                                    <option value="BI">Burundi</option>
+                                    <option value="KH">Cambodia</option>
+                                    <option value="CM">Cameroon</option>
+                                    <option value="CA">Canada</option>
+                                    <option value="CV">Cape Verde</option>
+                                    <option value="KY">Cayman Islands</option>
+                                    <option value="CF">Central African Republic</option>
+                                    <option value="TD">Chad</option>
+                                    <option value="CL">Chile</option>
+                                    <option value="CN">China</option>
+                                    <option value="CX">Christmas Island</option>
+                                    <option value="CC">Cocos (Keeling) Islands</option>
+                                    <option value="CO">Colombia</option>
+                                    <option value="KM">Comoros</option>
+                                    <option value="CG">Congo</option>
+                                    <option value="CD">Congo, the Democratic Republic of the</option>
+                                    <option value="CK">Cook Islands</option>
+                                    <option value="CR">Costa Rica</option>
+                                    <option value="CI">Côte d'Ivoire</option>
+                                    <option value="HR">Croatia</option>
+                                    <option value="CU">Cuba</option>
+                                    <option value="CW">Curaçao</option>
+                                    <option value="CY">Cyprus</option>
+                                    <option value="CZ">Czech Republic</option>
+                                    <option value="DK">Denmark</option>
+                                    <option value="DJ">Djibouti</option>
+                                    <option value="DM">Dominica</option>
+                                    <option value="DO">Dominican Republic</option>
+                                    <option value="EC">Ecuador</option>
+                                    <option value="EG">Egypt</option>
+                                    <option value="SV">El Salvador</option>
+                                    <option value="GQ">Equatorial Guinea</option>
+                                    <option value="ER">Eritrea</option>
+                                    <option value="EE">Estonia</option>
+                                    <option value="ET">Ethiopia</option>
+                                    <option value="FK">Falkland Islands (Malvinas)</option>
+                                    <option value="FO">Faroe Islands</option>
+                                    <option value="FJ">Fiji</option>
+                                    <option value="FI">Finland</option>
+                                    <option value="FR">France</option>
+                                    <option value="GF">French Guiana</option>
+                                    <option value="PF">French Polynesia</option>
+                                    <option value="TF">French Southern Territories</option>
+                                    <option value="GA">Gabon</option>
+                                    <option value="GM">Gambia</option>
+                                    <option value="GE">Georgia</option>
+                                    <option value="DE">Germany</option>
+                                    <option value="GH">Ghana</option>
+                                    <option value="GI">Gibraltar</option>
+                                    <option value="GR">Greece</option>
+                                    <option value="GL">Greenland</option>
+                                    <option value="GD">Grenada</option>
+                                    <option value="GP">Guadeloupe</option>
+                                    <option value="GU">Guam</option>
+                                    <option value="GT">Guatemala</option>
+                                    <option value="GG">Guernsey</option>
+                                    <option value="GN">Guinea</option>
+                                    <option value="GW">Guinea-Bissau</option>
+                                    <option value="GY">Guyana</option>
+                                    <option value="HT">Haiti</option>
+                                    <option value="HM">Heard Island and McDonald Islands</option>
+                                    <option value="VA">Holy See (Vatican City State)</option>
+                                    <option value="HN">Honduras</option>
+                                    <option value="HK">Hong Kong</option>
+                                    <option value="HU" selected="selected">Hungary</option>
+                                    <option value="IS">Iceland</option>
+                                    <option value="IN">India</option>
+                                    <option value="ID">Indonesia</option>
+                                    <option value="IR">Iran, Islamic Republic of</option>
+                                    <option value="IQ">Iraq</option>
+                                    <option value="IE">Ireland</option>
+                                    <option value="IM">Isle of Man</option>
+                                    <option value="IL">Israel</option>
+                                    <option value="IT">Italy</option>
+                                    <option value="JM">Jamaica</option>
+                                    <option value="JP">Japan</option>
+                                    <option value="JE">Jersey</option>
+                                    <option value="JO">Jordan</option>
+                                    <option value="KZ">Kazakhstan</option>
+                                    <option value="KE">Kenya</option>
+                                    <option value="KI">Kiribati</option>
+                                    <option value="KP">Korea, Democratic People's Republic of</option>
+                                    <option value="KR">Korea, Republic of</option>
+                                    <option value="KW">Kuwait</option>
+                                    <option value="KG">Kyrgyzstan</option>
+                                    <option value="LA">Lao People's Democratic Republic</option>
+                                    <option value="LV">Latvia</option>
+                                    <option value="LB">Lebanon</option>
+                                    <option value="LS">Lesotho</option>
+                                    <option value="LR">Liberia</option>
+                                    <option value="LY">Libya</option>
+                                    <option value="LI">Liechtenstein</option>
+                                    <option value="LT">Lithuania</option>
+                                    <option value="LU">Luxembourg</option>
+                                    <option value="MO">Macao</option>
+                                    <option value="MK">Macedonia, the former Yugoslav Republic of</option>
+                                    <option value="MG">Madagascar</option>
+                                    <option value="MW">Malawi</option>
+                                    <option value="MY">Malaysia</option>
+                                    <option value="MV">Maldives</option>
+                                    <option value="ML">Mali</option>
+                                    <option value="MT">Malta</option>
+                                    <option value="MH">Marshall Islands</option>
+                                    <option value="MQ">Martinique</option>
+                                    <option value="MR">Mauritania</option>
+                                    <option value="MU">Mauritius</option>
+                                    <option value="YT">Mayotte</option>
+                                    <option value="MX">Mexico</option>
+                                    <option value="FM">Micronesia, Federated States of</option>
+                                    <option value="MD">Moldova, Republic of</option>
+                                    <option value="MC">Monaco</option>
+                                    <option value="MN">Mongolia</option>
+                                    <option value="ME">Montenegro</option>
+                                    <option value="MS">Montserrat</option>
+                                    <option value="MA">Morocco</option>
+                                    <option value="MZ">Mozambique</option>
+                                    <option value="MM">Myanmar</option>
+                                    <option value="NA">Namibia</option>
+                                    <option value="NR">Nauru</option>
+                                    <option value="NP">Nepal</option>
+                                    <option value="NL">Netherlands</option>
+                                    <option value="NC">New Caledonia</option>
+                                    <option value="NZ">New Zealand</option>
+                                    <option value="NI">Nicaragua</option>
+                                    <option value="NE">Niger</option>
+                                    <option value="NG">Nigeria</option>
+                                    <option value="NU">Niue</option>
+                                    <option value="NF">Norfolk Island</option>
+                                    <option value="MP">Northern Mariana Islands</option>
+                                    <option value="NO">Norway</option>
+                                    <option value="OM">Oman</option>
+                                    <option value="PK">Pakistan</option>
+                                    <option value="PW">Palau</option>
+                                    <option value="PS">Palestinian Territory, Occupied</option>
+                                    <option value="PA">Panama</option>
+                                    <option value="PG">Papua New Guinea</option>
+                                    <option value="PY">Paraguay</option>
+                                    <option value="PE">Peru</option>
+                                    <option value="PH">Philippines</option>
+                                    <option value="PN">Pitcairn</option>
+                                    <option value="PL">Poland</option>
+                                    <option value="PT">Portugal</option>
+                                    <option value="PR">Puerto Rico</option>
+                                    <option value="QA">Qatar</option>
+                                    <option value="RE">Réunion</option>
+                                    <option value="RO">Romania</option>
+                                    <option value="RU">Russian Federation</option>
+                                    <option value="RW">Rwanda</option>
+                                    <option value="BL">Saint Barthélemy</option>
+                                    <option value="SH">Saint Helena, Ascension and Tristan da Cunha</option>
+                                    <option value="KN">Saint Kitts and Nevis</option>
+                                    <option value="LC">Saint Lucia</option>
+                                    <option value="MF">Saint Martin (French part)</option>
+                                    <option value="PM">Saint Pierre and Miquelon</option>
+                                    <option value="VC">Saint Vincent and the Grenadines</option>
+                                    <option value="WS">Samoa</option>
+                                    <option value="SM">San Marino</option>
+                                    <option value="ST">Sao Tome and Principe</option>
+                                    <option value="SA">Saudi Arabia</option>
+                                    <option value="SN">Senegal</option>
+                                    <option value="RS">Serbia</option>
+                                    <option value="SC">Seychelles</option>
+                                    <option value="SL">Sierra Leone</option>
+                                    <option value="SG">Singapore</option>
+                                    <option value="SX">Sint Maarten (Dutch part)</option>
+                                    <option value="SK">Slovakia</option>
+                                    <option value="SI">Slovenia</option>
+                                    <option value="SB">Solomon Islands</option>
+                                    <option value="SO">Somalia</option>
+                                    <option value="ZA">South Africa</option>
+                                    <option value="GS">South Georgia and the South Sandwich Islands</option>
+                                    <option value="SS">South Sudan</option>
+                                    <option value="ES">Spain</option>
+                                    <option value="LK">Sri Lanka</option>
+                                    <option value="SD">Sudan</option>
+                                    <option value="SR">Suriname</option>
+                                    <option value="SJ">Svalbard and Jan Mayen</option>
+                                    <option value="SZ">Swaziland</option>
+                                    <option value="SE">Sweden</option>
+                                    <option value="CH">Switzerland</option>
+                                    <option value="SY">Syrian Arab Republic</option>
+                                    <option value="TW">Taiwan, Province of China</option>
+                                    <option value="TJ">Tajikistan</option>
+                                    <option value="TZ">Tanzania, United Republic of</option>
+                                    <option value="TH">Thailand</option>
+                                    <option value="TL">Timor-Leste</option>
+                                    <option value="TG">Togo</option>
+                                    <option value="TK">Tokelau</option>
+                                    <option value="TO">Tonga</option>
+                                    <option value="TT">Trinidad and Tobago</option>
+                                    <option value="TN">Tunisia</option>
+                                    <option value="TR">Turkey</option>
+                                    <option value="TM">Turkmenistan</option>
+                                    <option value="TC">Turks and Caicos Islands</option>
+                                    <option value="TV">Tuvalu</option>
+                                    <option value="UG">Uganda</option>
+                                    <option value="UA">Ukraine</option>
+                                    <option value="AE">United Arab Emirates</option>
+                                    <option value="GB">United Kingdom</option>
+                                    <option value="US">United States</option>
+                                    <option value="UM">United States Minor Outlying Islands</option>
+                                    <option value="UY">Uruguay</option>
+                                    <option value="UZ">Uzbekistan</option>
+                                    <option value="VU">Vanuatu</option>
+                                    <option value="VE">Venezuela, Bolivarian Republic of</option>
+                                    <option value="VN">Viet Nam</option>
+                                    <option value="VG">Virgin Islands, British</option>
+                                    <option value="VI">Virgin Islands, U.S.</option>
+                                    <option value="WF">Wallis and Futuna</option>
+                                    <option value="EH">Western Sahara</option>
+                                    <option value="YE">Yemen</option>
+                                    <option value="ZM">Zambia</option>
+                                    <option value="ZW">Zimbabwe</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 col-xs-4 col-sm-4">
+
+                            </div>
+                        </div>
+                        <div class="row" style="padding-top: 9%;text-align: center;">
+                            <div class="col-md-1 col-xs-1 col-sm-1">
+
+                            </div>
+                            <div class="col-md-3 col-xs-3 col-sm-3">
+                                <label>Do you have a prefered diet?</label>
+                                <select id="onboardDietSelect">
+                                    <option value="pescetarian">Pescetarian</option><option value="lacto vegetarian">Lacto vegetarian</option><option value="ovo vegetarian">Ovo vegetarian</option><option value="vegan">Vegan</option><option value="paleo">Paleo</option><option value="primal">Primal</option><option value="vegetarian">Vegetarian</option><option value="">None</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 col-xs-3 col-sm-3">
+                                <label>Do you have any intolerances?</label>
+                                <select id="onboardIntoleranceSelect" multiple="multiple">
+                                    <option value="dairy">Dairy (Lactose)</option><option value="egg">Egg</option><option value="gluten">Gluten</option><option value="peanut">Peanut</option><option value="sesame">Sesame</option><option value="seafood">Seafood</option><option value="shellfish">Shellfish</option><option value="soy">Soy</option><option value="sulfite">Sulfite</option><option value="tree nut">Tree nut</option><option value="wheat">Wheat</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 col-xs-4 col-sm-4">
+                                <label>What are your available ingredients?</label>
+                                <select id="onboardingIngredientSelect" multiple="multiple">
+                                    <optgroup label="Popular Ingredients"><option value="pasta">Pasta</option><option value="rice">Rice</option><option value="chicken">Chicken</option><option value="pork">Pork</option><option value="broccoli">Broccoli</option><option value="cauliflower">Cauliflower</option><option value="ground meat">Ground meat</option><option value="minced meat">Minced meat</option><option value="onion">Onion</option><option value="green onion">Green onion</option><option value="paprika">Paprika</option><option value="garlic">Garlic</option><option value="salt">Salt</option><option value="pepper">Pepper</option><option value="flour">Flour</option><option value="tomato">Tomato</option><option value="bread">Bread</option><option value="egg">Egg</option><option value="mayonnaise">Mayonnaise</option><option value="ketchup">Ketchup</option><option value="sour cream">Sour cream</option><option value="whipped cream">Whipped cream</option><option value="apple">Apple</option><option value="orange">Orange</option><option value="banana">Banana</option><option value="milk">Milk</option><option value="yogurt">Yogurt</option><option value="turkey">Turkey</option><option value="ham">Ham</option><option value="cheese">Cheese</option><option value="white wine">White wine</option><option value="red wine">Red wine</option><option value="beer">Beer</option><option value="lemons">Lemons</option><option value="butter">Butter</option><option value="mustard">Mustard</option><option value="tortilla">Tortilla</option><option value="chocolate">Chocolate</option><option value="potato">Potato</option></optgroup><optgroup label="Milk, Eggs, Other Dairy"><option value="egg">Egg</option><option value="eggs">Eggs</option><option value="eggnog">Eggnog</option><option value="eggwhite">Eggwhite</option><option value="eggwhites">Eggwhites</option><option value="eggbeaters">Eggbeaters</option><option value="cream">Cream</option><option value="crema">Crema</option><option value="butter">Butter</option><option value="milk">Milk</option><option value="quark">Quark</option><option value="tzaziki">Tzaziki</option><option value="tzatziki">Tzatziki</option><option value="soymilk">Soymilk</option><option value="yolk">Yolk</option><option value="yogurt">Yogurt</option><option value="yoghurt">Yoghurt</option></optgroup><optgroup label="Meat"><option value="chicken">Chicken</option><option value="chorizo">Chorizo</option><option value="beef">Beef</option><option value="boar">Boar</option><option value="brat">Brat</option><option value="bacon">Bacon</option><option value="bison">Bison</option><option value="buffalo">Buffalo</option><option value="bologna">Bologna</option><option value="baloney">Baloney</option><option value="drumstick">Drumstick</option><option value="drummettes">Drummettes</option><option value="andouille">Andouille</option><option value="frank">Frank</option><option value="franks">Franks</option><option value="kidney">Kidney</option><option value="ham">Ham</option><option value="hotdog">Hotdog</option><option value="meatball">Meatball</option><option value="pork">Pork</option><option value="poultry">Poultry</option><option value="nuggets">Nuggets</option><option value="offal">Offal</option><option value="oxtail">Oxtail</option><option value="oxtails">Oxtails</option><option value="ossobuco">Ossobuco</option><option value="quail">Quail</option><option value="ribs">Ribs</option><option value="rabbit">Rabbit</option><option value="rabbits">Rabbits</option><option value="reindeer">Reindeer</option><option value="veal">Veal</option><option value="venison">Venison</option><option value="turkey">Turkey</option><option value="suet">Suet</option><option value="spam">Spam</option><option value="steak">Steak</option><option value="speck">Speck</option><option value="salami">Salami</option><option value="salame">Salame</option><option value="steaks">Steaks</option><option value="sirloin">Sirloin</option><option value="sausage">Sausage</option><option value="schmaltz">Schmaltz</option><option value="wings">Wings</option><option value="wiener">Wiener</option><option value="wieners">Wieners</option><option value="weisswurst">Weisswurst</option></optgroup><optgroup label="Produce"><option value="endive">Endive</option><option value="epazote">Epazote</option><option value="escarole">Escarole</option><option value="eggplant">Eggplant</option><option value="eggplants">Eggplants</option><option value="enokitake">Enokitake</option><option value="enokidake">Enokidake</option><option value="elderberry">Elderberry</option><option value="elderberries">Elderberries</option><option value="corn">Corn</option><option value="chard">Chard</option><option value="chile">Chile</option><option value="chili">Chili</option><option value="celery">Celery</option><option value="carrot">Carrot</option><option value="cherry">Cherry</option><option value="chives">Chives</option><option value="citron">Citron</option><option value="chilli">Chilli</option><option value="chilis">Chilis</option><option value="chiles">Chiles</option><option value="cabbage">Cabbage</option><option value="chayote">Chayote</option><option value="chicory">Chicory</option><option value="chesnut">Chesnut</option><option value="coconut">Coconut</option><option value="carrots">Carrots</option><option value="cassava">Cassava</option><option value="chilies">Chilies</option><option value="chillis">Chillis</option><option value="cabbages">Cabbages</option><option value="chayotes">Chayotes</option><option value="collards">Collards</option><option value="capsicum">Capsicum</option><option value="cucumber">Cucumber</option><option value="beet">Beet</option><option value="bael">Bael</option><option value="basil">Basil</option><option value="beets">Beets</option><option value="berry">Berry</option><option value="banana">Banana</option><option value="bananas">Bananas</option><option value="berries">Berries</option><option value="bilimbi">Bilimbi</option><option value="beetroot">Beetroot</option><option value="broccoli">Broccoli</option><option value="date">Date</option><option value="dates">Dates</option><option value="daikon">Daikon</option><option value="durian">Durian</option><option value="damsons">Damsons</option><option value="dragonfruit">Dragonfruit</option><option value="amla">Amla</option><option value="apple">Apple</option><option value="apples">Apples</option><option value="avocado">Avocado</option><option value="arugula">Arugula</option><option value="apricot">Apricot</option><option value="avocados">Avocados</option><option value="apricots">Apricots</option><option value="avocadoes">Avocadoes</option><option value="asparagus">Asparagus</option><option value="aubergine">Aubergine</option><option value="artichoke">Artichoke</option><option value="aubergines">Aubergines</option><option value="artichokes">Artichokes</option><option value="fig">Fig</option><option value="figs">Figs</option><option value="fruit">Fruit</option><option value="falsa">Falsa</option><option value="frisee">Frisee</option><option value="fennel">Fennel</option><option value="feijoa">Feijoa</option><option value="feijoas">Feijoas</option><option value="kuri">Kuri</option><option value="kiwi">Kiwi</option><option value="kale">Kale</option><option value="kaki">Kaki</option><option value="kiwis">Kiwis</option><option value="katuk">Katuk</option><option value="kumara">Kumara</option><option value="kesaur">Kesaur</option><option value="karela">Karela</option><option value="kabocha">Kabocha</option><option value="kumquat">Kumquat</option><option value="kangkong">Kangkong</option><option value="kohlrabi">Kohlrabi</option><option value="kumquats">Kumquats</option><option value="kiwifruit">Kiwifruit</option><option value="kiwifruits">Kiwifruits</option><option value="jicama">Jicama</option><option value="jackfruit">Jackfruit</option><option value="jarrahdale">Jarrahdale</option><option value="hominy">Hominy</option><option value="hokkaido">Hokkaido</option><option value="honeydew">Honeydew</option><option value="honewort">Honewort</option><option value="horseradish">Horseradish</option><option value="guava">Guava</option><option value="grape">Grape</option><option value="garlic">Garlic</option><option value="guavas">Guavas</option><option value="grapes">Grapes</option><option value="greens">Greens</option><option value="gigante">Gigante</option><option value="ginseng">Ginseng</option><option value="gigantes">Gigantes</option><option value="guajillo">Guajillo</option><option value="guajillos">Guajillos</option><option value="grapefruit">Grapefruit</option><option value="gooseberry">Gooseberry</option><option value="greenbeans">Greenbeans</option><option value="granadilla">Granadilla</option><option value="leek">Leek</option><option value="lime">Lime</option><option value="lemon">Lemon</option><option value="leeks">Leeks</option><option value="limes">Limes</option><option value="lychee">Lychee</option><option value="litchi">Litchi</option><option value="lemons">Lemons</option><option value="loquat">Loquat</option><option value="lychees">Lychees</option><option value="lettuce">Lettuce</option><option value="lettece">Lettece</option><option value="loquats">Loquats</option><option value="langsat">Langsat</option><option value="limonia">Limonia</option><option value="lotusroot">Lotusroot</option><option value="mint">Mint</option><option value="melon">Melon</option><option value="maize">Maize</option><option value="mango">Mango</option><option value="mache">Mache</option><option value="mÃ¢che">MÃ¢che</option><option value="mizuna">Mizuna</option><option value="manioc">Manioc</option><option value="manoic">Manoic</option><option value="morels">Morels</option><option value="mangos">Mangos</option><option value="mangold">Mangold</option><option value="mesclun">Mesclun</option><option value="mangoes">Mangoes</option><option value="mitsuba">Mitsuba</option><option value="marjoram">Marjoram</option><option value="mushroom">Mushroom</option><option value="mirlitons">Mirlitons</option><option value="plum">Plum</option><option value="pear">Pear</option><option value="peas">Peas</option><option value="plums">Plums</option><option value="peach">Peach</option><option value="pears">Pears</option><option value="pluot">Pluot</option><option value="pitaya">Pitaya</option><option value="papaya">Papaya</option><option value="pipian">Pipian</option><option value="pomelo">Pomelo</option><option value="pluots">Pluots</option><option value="potato">Potato</option><option value="parvar">Parvar</option><option value="parwar">Parwar</option><option value="parwal">Parwal</option><option value="phalsa">Phalsa</option><option value="peaches">Peaches</option><option value="parsley">Parsley</option><option value="poblano">Poblano</option><option value="papayas">Papayas</option><option value="parsnip">Parsnip</option><option value="pimento">Pimento</option><option value="peppers">Peppers</option><option value="pummelo">Pummelo</option><option value="pomelos">Pomelos</option><option value="pumpkin">Pumpkin</option><option value="palmyra">Palmyra</option><option value="pitahaya">Pitahaya</option><option value="plantain">Plantain</option><option value="poblanos">Poblanos</option><option value="parsnips">Parsnips</option><option value="pimiento">Pimiento</option><option value="pimentos">Pimentos</option><option value="pummelos">Pummelos</option><option value="nashi">Nashi</option><option value="nectarine">Nectarine</option><option value="nectarines">Nectarines</option><option value="okra">Okra</option><option value="okras">Okras</option><option value="onion">Onion</option><option value="onions">Onions</option><option value="orange">Orange</option><option value="oranges">Oranges</option><option value="oregano">Oregano</option><option value="quince">Quince</option><option value="quinces">Quinces</option><option value="ramps">Ramps</option><option value="ramson">Ramson</option><option value="rapini">Rapini</option><option value="rocket">Rocket</option><option value="radish">Radish</option><option value="rhubarb">Rhubarb</option><option value="romaine">Romaine</option><option value="rambutan">Rambutan</option><option value="rutabaga">Rutabaga</option><option value="radishes">Radishes</option><option value="romanesco">Romanesco</option><option value="radicchio">Radicchio</option><option value="rutabagas">Rutabagas</option><option value="vidalia">Vidalia</option><option value="vidalias">Vidalias</option><option value="vegetable">Vegetable</option><option value="thyme">Thyme</option><option value="tinda">Tinda</option><option value="turnip">Turnip</option><option value="tomato">Tomato</option><option value="tinday">Tinday</option><option value="tindas">Tindas</option><option value="turnips">Turnips</option><option value="tomatos">Tomatos</option><option value="tangelo">Tangelo</option><option value="tomatoes">Tomatoes</option><option value="tarragon">Tarragon</option><option value="tangelos">Tangelos</option><option value="tangerine">Tangerine</option><option value="tomatillo">Tomatillo</option><option value="tamarillo">Tamarillo</option><option value="tangerines">Tangerines</option><option value="tomatillos">Tomatillos</option><option value="swede">Swede</option><option value="squash">Squash</option><option value="swedes">Swedes</option><option value="sorrel">Sorrel</option><option value="sultana">Sultana</option><option value="shallot">Shallot</option><option value="sprouts">Sprouts</option><option value="spinach">Spinach</option><option value="sultanas">Sultanas</option><option value="scallion">Scallion</option><option value="sunchoke">Sunchoke</option><option value="shallots">Shallots</option><option value="watercress">Watercress</option><option value="watermelon">Watermelon</option><option value="yam">Yam</option><option value="yams">Yams</option><option value="yuca">Yuca</option><option value="yuzu">Yuzu</option><option value="yucca">Yucca</option><option value="zucchini">Zucchini</option><option value="zucchinis">Zucchinis</option></optgroup><optgroup label="Gourmet"><option value="escargot">Escargot</option><option value="caviar">Caviar</option><option value="aioli">Aioli</option><option value="hibiscus">Hibiscus</option><option value="guanciale">Guanciale</option><option value="nettle">Nettle</option><option value="nettles">Nettles</option><option value="rosebud">Rosebud</option><option value="rosewater">Rosewater</option><option value="snails">Snails</option><option value="saffron">Saffron</option></optgroup><optgroup label="Cheese"><option value="emmentaler">Emmentaler</option><option value="emmenthaler">Emmenthaler</option><option value="comte">Comte</option><option value="chevre">Chevre</option><option value="cojack">Cojack</option><option value="cheese">Cheese</option><option value="cheddar">Cheddar</option><option value="brie">Brie</option><option value="burrata">Burrata</option><option value="boursin">Boursin</option><option value="feta">Feta</option><option value="halumi">Halumi</option><option value="havarti">Havarti</option><option value="haloumi">Haloumi</option><option value="halloumi">Halloumi</option><option value="gouda">Gouda</option><option value="gruyere">Gruyere</option><option value="gorgonzola">Gorgonzola</option><option value="lancashire">Lancashire</option><option value="munster">Munster</option><option value="muenster">Muenster</option><option value="mozarella">Mozarella</option><option value="parmesan">Parmesan</option><option value="nabulsi">Nabulsi</option><option value="naboulsi">Naboulsi</option><option value="neufchatel">Neufchatel</option><option value="neufchÃ¢tel">NeufchÃ¢tel</option><option value="romano">Romano</option><option value="ricotta">Ricotta</option><option value="roquefort">Roquefort</option><option value="stilton">Stilton</option></optgroup><optgroup label="Seafood"><option value="cod">Cod</option><option value="crab">Crab</option><option value="clams">Clams</option><option value="catfish">Catfish</option><option value="cockles">Cockles</option><option value="codfish">Codfish</option><option value="crabmeat">Crabmeat</option><option value="crawfish">Crawfish</option><option value="crayfish">Crayfish</option><option value="bass">Bass</option><option value="bombil">Bombil</option><option value="belacan">Belacan</option><option value="baccala">Baccala</option><option value="bluefish">Bluefish</option><option value="branzini">Branzini</option><option value="branzino">Branzino</option><option value="fish">Fish</option><option value="flounder">Flounder</option><option value="flounders">Flounders</option><option value="fishsticks">Fishsticks</option><option value="hake">Hake</option><option value="halibut">Halibut</option><option value="herring">Herring</option><option value="haddock">Haddock</option><option value="herrings">Herrings</option><option value="grouper">Grouper</option><option value="gravlax">Gravlax</option><option value="groupers">Groupers</option><option value="gravadlax">Gravadlax</option><option value="lox">Lox</option><option value="lobster">Lobster</option><option value="lobsters">Lobsters</option><option value="mussels">Mussels</option><option value="mackerel">Mackerel</option><option value="mahimahi">Mahimahi</option><option value="monkfish">Monkfish</option><option value="pike">Pike</option><option value="prawn">Prawn</option><option value="porgy">Porgy</option><option value="perch">Perch</option><option value="prawns">Prawns</option><option value="porgies">Porgies</option><option value="pollock">Pollock</option><option value="pomfret">Pomfret</option><option value="octopus">Octopus</option><option value="oysters">Oysters</option><option value="redfish">Redfish</option><option value="rockfish">Rockfish</option><option value="tuna">Tuna</option><option value="tunny">Tunny</option><option value="trout">Trout</option><option value="turbot">Turbot</option><option value="tengra">Tengra</option><option value="tilapia">Tilapia</option><option value="scup">Scup</option><option value="sole">Sole</option><option value="scups">Scups</option><option value="squid">Squid</option><option value="sable">Sable</option><option value="shark">Shark</option><option value="skate">Skate</option><option value="sprats">Sprats</option><option value="shrimp">Shrimp</option><option value="salmon">Salmon</option><option value="shrimps">Shrimps</option><option value="snapper">Snapper</option><option value="seabass">Seabass</option><option value="sardine">Sardine</option><option value="snappers">Snappers</option><option value="sardines">Sardines</option><option value="scallops">Scallops</option><option value="seabream">Seabream</option><option value="whiting">Whiting</option><option value="whitefish">Whitefish</option><option value="whitebait">Whitebait</option></optgroup><optgroup label="Spices and Seasonings"><option value="clove">Clove</option><option value="cumin">Cumin</option><option value="cloves">Cloves</option><option value="cayenne">Cayenne</option><option value="chervil">Chervil</option><option value="charoli">Charoli</option><option value="cardamom">Cardamom</option><option value="cardamon">Cardamon</option><option value="cinnamon">Cinnamon</option><option value="baharat">Baharat</option><option value="berbere">Berbere</option><option value="dill">Dill</option><option value="dillweed">Dillweed</option><option value="alum">Alum</option><option value="anise">Anise</option><option value="aleppo">Aleppo</option><option value="amchur">Amchur</option><option value="ajwain">Ajwain</option><option value="amchoor">Amchoor</option><option value="aamchur">Aamchur</option><option value="aniseed">Aniseed</option><option value="allspice">Allspice</option><option value="asafetida">Asafetida</option><option value="asafoetida">Asafoetida</option><option value="furikake">Furikake</option><option value="hing">Hing</option><option value="herbs">Herbs</option><option value="ginger">Ginger</option><option value="gingerroot">Gingerroot</option><option value="lavang">Lavang</option><option value="mace">Mace</option><option value="methi">Methi</option><option value="pepper">Pepper</option><option value="paprika">Paprika</option><option value="nutmeg">Nutmeg</option><option value="rub">Rub</option><option value="rosemary">Rosemary</option><option value="vegeta">Vegeta</option><option value="tumeric">Tumeric</option><option value="turmeric">Turmeric</option><option value="s&p">S&p</option><option value="sage">Sage</option><option value="salt">Salt</option><option value="sumac">Sumac</option><option value="sazon">Sazon</option><option value="sesame">Sesame</option><option value="spices">Spices</option><option value="seasalt">Seasalt</option><option value="sea-salt">Sea-salt</option><option value="shichimi">Shichimi</option><option value="wasabi">Wasabi</option></optgroup><optgroup label="Baking"><option value="cocoa">Cocoa</option><option value="crisco">Crisco</option><option value="carmine">Carmine</option><option value="custard">Custard</option><option value="cornmeal">Cornmeal</option><option value="brioche">Brioche</option><option value="bisquick">Bisquick</option><option value="ace-K">Ace-K</option><option value="flax">Flax</option><option value="flour">Flour</option><option value="flaxseed">Flaxseed</option><option value="filberts">Filberts</option><option value="flaxmeal">Flaxmeal</option><option value="frosting">Frosting</option><option value="flaxseeds">Flaxseeds</option><option value="icing">Icing</option><option value="isomalt">Isomalt</option><option value="hazelnuts">Hazelnuts</option><option value="grits">Grits</option><option value="gelatin">Gelatin</option><option value="gelatine">Gelatine</option><option value="lard">Lard</option><option value="lactose">Lactose</option><option value="lactitol">Lactitol</option><option value="marzipan">Marzipan</option><option value="mannitol">Mannitol</option><option value="molasses">Molasses</option><option value="maltitol">Maltitol</option><option value="pectin">Pectin</option><option value="panela">Panela</option><option value="pignoli">Pignoli</option><option value="piecrust">Piecrust</option><option value="neotame">Neotame</option><option value="nonpareils">Nonpareils</option><option value="raisins">Raisins</option><option value="rebiana">Rebiana</option><option value="vanilla">Vanilla</option><option value="vanillin">Vanillin</option><option value="teff">Teff</option><option value="truvia">Truvia</option><option value="treacle">Treacle</option><option value="tapioca">Tapioca</option><option value="turbinado">Turbinado</option><option value="sugar">Sugar</option><option value="stevia">Stevia</option><option value="swerve">Swerve</option><option value="sucanat">Sucanat</option><option value="sucrose">Sucrose</option><option value="splenda">Splenda</option><option value="sorbitol">Sorbitol</option><option value="semolina">Semolina</option><option value="xylitol">Xylitol</option><option value="wheatmeal">Wheatmeal</option><option value="yeast">Yeast</option></optgroup><optgroup label="Canned and Jarred"><option value="capers">Capers</option><option value="cowpea">Cowpea</option><option value="broth">Broth</option><option value="broths">Broths</option><option value="bouillon">Bouillon</option><option value="anchovy">Anchovy</option><option value="anchovies">Anchovies</option><option value="applesauce">Applesauce</option><option value="alcaparrado">Alcaparrado</option><option value="kraut">Kraut</option><option value="khesari">Khesari</option><option value="gravy">Gravy</option><option value="gherkins">Gherkins</option><option value="mexicorn">Mexicorn</option><option value="passata">Passata</option><option value="olive">Olive</option><option value="olives">Olives</option><option value="verjus">Verjus</option><option value="verjuice">Verjuice</option><option value="stock">Stock</option><option value="soybeans">Soybeans</option></optgroup><optgroup label="Condiments"><option value="catsup">Catsup</option><option value="ketchup">Ketchup</option><option value="hotsauce">Hotsauce</option><option value="mayo">Mayo</option><option value="mustard">Mustard</option><option value="vegenaise">Vegenaise</option><option value="veganaise">Veganaise</option><option value="tabasco">Tabasco</option><option value="siracha">Siracha</option><option value="sriracha">Sriracha</option></optgroup><optgroup label="Refrigerated"><option value="crepes">Crepes</option><option value="crÃªpes">CrÃªpes</option><option value="biscuit">Biscuit</option><option value="biscuits">Biscuits</option><option value="agnolotti">Agnolotti</option><option value="hommus">Hommus</option><option value="hummus">Hummus</option><option value="guacamole">Guacamole</option><option value="ravioli">Ravioli</option><option value="raviolis">Raviolis</option><option value="tempeh">Tempeh</option></optgroup><optgroup label="Nuts"><option value="cashew">Cashew</option><option value="cashews">Cashews</option><option value="almond">Almond</option><option value="almonds">Almonds</option><option value="groundnut">Groundnut</option><option value="groundnuts">Groundnuts</option><option value="peanut">Peanut</option><option value="pecans">Pecans</option><option value="peanuts">Peanuts</option><option value="nuts">Nuts</option><option value="walnut">Walnut</option><option value="walnuts">Walnuts</option></optgroup><optgroup label="Cereal"><option value="cereal">Cereal</option><option value="allbran">Allbran</option><option value="all-bran">All-bran</option><option value="farina">Farina</option><option value="granola">Granola</option><option value="muesli">Muesli</option><option value="oats">Oats</option><option value="oatmeal">Oatmeal</option></optgroup><optgroup label="Frozen"><option value="caramel">Caramel</option><option value="froyo">Froyo</option><option value="fries">Fries</option><option value="fro-yo">Fro-yo</option><option value="ice">Ice</option><option value="icecream">Icecream</option><option value="hash">Hash</option><option value="hashbrowns">Hashbrowns</option><option value="gelato">Gelato</option><option value="mirepoix">Mirepoix</option><option value="tortelini">Tortelini</option><option value="tortelloni">Tortelloni</option><option value="tortellini">Tortellini</option><option value="sorbet">Sorbet</option><option value="sherbet">Sherbet</option></optgroup><optgroup label="Bakery/Bread"><option value="cupcake">Cupcake</option><option value="chapati">Chapati</option><option value="challah">Challah</option><option value="crostini">Crostini</option><option value="bun">Bun</option><option value="buns">Buns</option><option value="bagel">Bagel</option><option value="bread">Bread</option><option value="boule">Boule</option><option value="bagels">Bagels</option><option value="baguette">Baguette</option><option value="focacia">Focacia</option><option value="focaccia">Focaccia</option><option value="flatbread">Flatbread</option><option value="foccaccia">Foccaccia</option><option value="lavash">Lavash</option><option value="lahvash">Lahvash</option><option value="pita">Pita</option><option value="pitas">Pitas</option><option value="paratha">Paratha</option><option value="roll">Roll</option><option value="roti">Roti</option><option value="rolls">Rolls</option><option value="toast">Toast</option><option value="tortilla">Tortilla</option><option value="tortillas">Tortillas</option><option value="stuffing">Stuffing</option><option value="wrap">Wrap</option><option value="wraps">Wraps</option></optgroup><optgroup label="Savory Snacks"><option value="cracker">Cracker</option><option value="fritos">Fritos</option><option value="kettlecorn">Kettlecorn</option><option value="jerky">Jerky</option><option value="grissini">Grissini</option><option value="goldfish">Goldfish</option><option value="pretzel">Pretzel</option><option value="popcorn">Popcorn</option><option value="pepitas">Pepitas</option><option value="pretzels">Pretzels</option><option value="niger">Niger</option><option value="nyjer">Nyjer</option><option value="ricecake">Ricecake</option><option value="ricecakes">Ricecakes</option><option value="seeds">Seeds</option><option value="saltines">Saltines</option></optgroup><optgroup label="Oil, Vinegar, Salad Dressing"><option value="croutons">Croutons</option><option value="hollandaise">Hollandaise</option><option value="pam">Pam</option><option value="oil">Oil</option><option value="ranch">Ranch</option><option value="vinegar">Vinegar</option><option value="vinaigrette">Vinaigrette</option></optgroup><optgroup label="Pasta and Rice"><option value="beans">Beans</option><option value="bucatini">Bucatini</option><option value="dal">Dal</option><option value="drelli">Drelli</option><option value="ditilini">Ditilini</option><option value="ditalini">Ditalini</option><option value="anellini">Anellini</option><option value="angelhair">Angelhair</option><option value="fusili">Fusili</option><option value="fregola">Fregola</option><option value="fregula">Fregula</option><option value="freekeh">Freekeh</option><option value="fusilli">Fusilli</option><option value="fresine">Fresine</option><option value="farfalle">Farfalle</option><option value="fettucini">Fettucini</option><option value="fettucine">Fettucine</option><option value="fettuccini">Fettuccini</option><option value="fettuccine">Fettuccine</option><option value="gnocchi">Gnocchi</option><option value="gemelli">Gemelli</option><option value="garbanzos">Garbanzos</option><option value="lentils">Lentils</option><option value="legumes">Legumes</option><option value="linguine">Linguine</option><option value="linguini">Linguini</option><option value="matki">Matki</option><option value="macaroni">Macaroni</option><option value="pesto">Pesto</option><option value="pasta">Pasta</option><option value="penne">Penne</option><option value="pastina">Pastina</option><option value="polenta">Polenta</option><option value="noodle">Noodle</option><option value="noodles">Noodles</option><option value="orzo">Orzo</option><option value="orecchiette">Orecchiette</option><option value="quinoa">Quinoa</option><option value="rice">Rice</option><option value="ramen">Ramen</option><option value="rotini">Rotini</option><option value="risoni">Risoni</option><option value="rigatoni">Rigatoni</option><option value="tubeti">Tubeti</option><option value="tubetti">Tubetti</option><option value="tubetini">Tubetini</option><option value="tubettini">Tubettini</option><option value="salsa">Salsa</option><option value="spelt">Spelt</option><option value="shells">Shells</option><option value="ziti">Ziti</option></optgroup><optgroup label="Nut butters, Jams, and Honey"><option value="jam">Jam</option><option value="jelly">Jelly</option><option value="honey">Honey</option><option value="marmelade">Marmelade</option><option value="marmalade">Marmalade</option><option value="nutella">Nutella</option></optgroup>
+                                </select>
+                            </div>
+                            <div class="col-md-1 col-xs-1 col-sm-1">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button id="onBoardDone" type="button" class="btn btn-custom-dark" data-dismiss="modal">Done</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="voiceControlHelp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content" style="background-color: #c6bfc0;">
+                    <div class="modal-header">
+                        <img style="margin-top: 7px; display: block;" height="50px" src="../img/cookingsmall.png"/>
+                        Cooking includes a voice control, to see the available commands, see the list below:
+                    </div>
+                    <div class="modal-body" style="min-height: 455px;">
+                        <div><h4>Available commands</h4><ul id="voicehelplist">
+                            <li>Go to ... - say "go to my shopping list" to go to your shopping list, this also works for the other menus!</li><li>
+                            Search ... - say "search pancakes" to search for pancakes! (or say anything else you are searching for!
+                        </li>
+                            <li>
+                                Select ... - say "select garlic" to indicate that you have garlic, this also works for any other ingredient!
+                            </li>
+                            <li>
+                                Search by ingredients - say "search by ingredients" to search by the ingredients you have available
+                            </li>
+                            <li>
+                                Add to shopping list - say this to add the ingredients of the current recipe to your shopping list! (You can also say "add from last recipe")
+                            </li>
+                            <li>
+                                Clear ingredients - say this to clear your list of available ingredients
+                            </li>
+                            <li>
+                                Clear shopping list - say this to clear your shopping list
+                            </li>
+                            <li>
+                                Next step - say this to go to the next step in the current recipe
+                            </li>
+                            <li>
+                                Previous step - say this to go to the previous step in the current recipe
+                            </li>
+                            <li>Next recipe - say this to go to the next recipe in the search results</li>
+
+                            <li>
+                                Previous recipe - say this to go to the previous recipe in the search results
+                            </li></ul></div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-custom-dark" data-dismiss="modal">Got it!</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row main-menu">
+            <div class="col-md-6 col-xs-6 col-sm-6 full-height">
+                <img style="margin-top: 7px;" height="50px" src="../img/cookingsmall.png"/>
+                <div style="margin-top: -55px;margin-left: 420px;" id="voicecontrol"><img height="50px" src="../img/mic.png" style="display: block;"><span style="display: inline;">Click me!</span></div></div>
+            <div class="col-md-6 col-xs-6 col-sm-6 full-height">
+                <ul id="navbar" class="nav nav-tabs full-height">
+                    <li class="active"><a style="height:100%; " data-toggle="tab" href="#textsearch" data-target="#textsearch, #recipeview"><img style="position:absolute;left:35%" height="45px" src="../img/normalsearch_white.png"/></a><span style="
+    /* vertical-align: bottom; */
+    color: white;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+">Search by text</span></li>
+                    <li><a style="height:100%;" data-toggle="tab" href="#ingredientsearch" data-target="#ingredientsearch, #recipeview"><img style="position:absolute;left:35%" height="45px" src="../img/ingredientsearch.png"/></a><span style="
+    /* vertical-align: bottom; */
+    color: black;
+    position: absolute;
+    top: 50px;
+    left: 0;
+">Search by ingredients</span></li>
+                    <li id="groceryMenu"><a style="height:100%;" data-toggle="tab" href="#grocerylist"><img style="position:absolute;left:30%" height="45px" src="../img/groceries.png"/></a><span style="
+    /* vertical-align: bottom; */
+    color: black;
+    position: absolute;
+    top: 50px;
+    left: 20px;
+">My shopping list</span></li>
+                </ul>
+            </div>
+        </div>
+        <div class="tab-content">
+            <div id="textsearch" class="tab-pane in active" style="height:9%">
+                <!-- BEGIN SEARCH BAR -->
+                <div class="row main-bar">
+                    <div class="panel-collapse collapse in">
+                        <div class="panel-body search-bar">
+                            <div class="col-md-2 col-xs-2 col-sm-2">
+                                <select id="cuisineSelect" multiple="multiple">
+                                    <option value="african">African</option><option value="chinese">Chinese</option><option value="japanese">Japanese</option><option value="korean">Korean</option><option value="vietnamese">Vietnamese</option><option value="thai">Thai</option><option value="indian">Indian</option><option value="british">British</option><option value="irish">Irish</option><option value="french">French</option><option value="italian">Italian</option><option value="mexican">Mexican</option><option value="spanish">Spanish</option><option value="middle eastern">Middle eastern</option><option value="jewish">Jewish</option><option value="american">American</option><option value="cajun">Cajun</option><option value="southern">Southern</option><option value="greek">Greek</option><option value="german">German</option><option value="nordic">Nordic</option><option value="eastern european">Eastern european</option><option value="caribbean">Caribbean</option><option value="latin american">Latin american</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-xs-2 col-sm-2">
+                                <select id="dietSelect">
+                                    <option value="pescetarian">Pescetarian</option><option value="lacto vegetarian">Lacto vegetarian</option><option value="ovo vegetarian">Ovo vegetarian</option><option value="vegan">Vegan</option><option value="paleo">Paleo</option><option value="primal">Primal</option><option value="vegetarian">Vegetarian</option><option value="">None</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-xs-2 col-sm-2">
+                                <select id="typeSelect">
+                                    <option value="main course">Main course</option><option value="side dish">Side dish</option><option value="dessert">Dessert</option><option value="appetizer">Appetizer</option><option value="salad">Salad</option><option value="bread">Bread</option><option value="breakfast">Breakfast</option><option value="soup">Soup</option><option value="beverage">Beverage</option><option value="sauce">Sauce</option><option value="drink">Drink</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-xs-2 col-sm-2">
+                                <select id="intoleranceSelect" multiple="multiple">
+                                    <option value="dairy">Dairy (Lactose)</option><option value="egg">Egg</option><option value="gluten">Gluten</option><option value="peanut">Peanut</option><option value="sesame">Sesame</option><option value="seafood">Seafood</option><option value="shellfish">Shellfish</option><option value="soy">Soy</option><option value="sulfite">Sulfite</option><option value="tree nut">Tree nut</option><option value="wheat">Wheat</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4 col-xs-4 col-sm-4">
+                                <div class="input-group">
+                                    <input id="textsearch-query" type="text" class="form-control" placeholder="Find a recipe">
+                                    <span class="input-group-btn">
+                                    <button id="textsearch-search" class="btn btn-custom" type="button">Search</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- END SEARCH BAR -->
+            </div>
+            <div id="ingredientsearch" class="tab-pane" style="height:9%">
+                <div class="row main-bar">
+                    <div class="panel-body search-bar">
+                        <div id="ingredientSelectWrapper" class="col-md-4 col-xs-4 col-sm-4" style="">
+                            <select id="ingredientSelect" multiple="multiple">
+                                <optgroup label="Popular Ingredients"><option value="pasta">Pasta</option><option value="rice">Rice</option><option value="chicken">Chicken</option><option value="pork">Pork</option><option value="broccoli">Broccoli</option><option value="cauliflower">Cauliflower</option><option value="ground meat">Ground meat</option><option value="minced meat">Minced meat</option><option value="onion">Onion</option><option value="green onion">Green onion</option><option value="paprika">Paprika</option><option value="garlic">Garlic</option><option value="salt">Salt</option><option value="pepper">Pepper</option><option value="flour">Flour</option><option value="tomato">Tomato</option><option value="bread">Bread</option><option value="egg">Egg</option><option value="mayonnaise">Mayonnaise</option><option value="ketchup">Ketchup</option><option value="sour cream">Sour cream</option><option value="whipped cream">Whipped cream</option><option value="apple">Apple</option><option value="orange">Orange</option><option value="banana">Banana</option><option value="milk">Milk</option><option value="yogurt">Yogurt</option><option value="turkey">Turkey</option><option value="ham">Ham</option><option value="cheese">Cheese</option><option value="white wine">White wine</option><option value="red wine">Red wine</option><option value="beer">Beer</option><option value="lemons">Lemons</option><option value="butter">Butter</option><option value="mustard">Mustard</option><option value="tortilla">Tortilla</option><option value="chocolate">Chocolate</option><option value="potato">Potato</option></optgroup><optgroup label="Milk, Eggs, Other Dairy"><option value="egg">Egg</option><option value="eggs">Eggs</option><option value="eggnog">Eggnog</option><option value="eggwhite">Eggwhite</option><option value="eggwhites">Eggwhites</option><option value="eggbeaters">Eggbeaters</option><option value="cream">Cream</option><option value="crema">Crema</option><option value="butter">Butter</option><option value="milk">Milk</option><option value="quark">Quark</option><option value="tzaziki">Tzaziki</option><option value="tzatziki">Tzatziki</option><option value="soymilk">Soymilk</option><option value="yolk">Yolk</option><option value="yogurt">Yogurt</option><option value="yoghurt">Yoghurt</option></optgroup><optgroup label="Meat"><option value="chicken">Chicken</option><option value="chorizo">Chorizo</option><option value="beef">Beef</option><option value="boar">Boar</option><option value="brat">Brat</option><option value="bacon">Bacon</option><option value="bison">Bison</option><option value="buffalo">Buffalo</option><option value="bologna">Bologna</option><option value="baloney">Baloney</option><option value="drumstick">Drumstick</option><option value="drummettes">Drummettes</option><option value="andouille">Andouille</option><option value="frank">Frank</option><option value="franks">Franks</option><option value="kidney">Kidney</option><option value="ham">Ham</option><option value="hotdog">Hotdog</option><option value="meatball">Meatball</option><option value="pork">Pork</option><option value="poultry">Poultry</option><option value="nuggets">Nuggets</option><option value="offal">Offal</option><option value="oxtail">Oxtail</option><option value="oxtails">Oxtails</option><option value="ossobuco">Ossobuco</option><option value="quail">Quail</option><option value="ribs">Ribs</option><option value="rabbit">Rabbit</option><option value="rabbits">Rabbits</option><option value="reindeer">Reindeer</option><option value="veal">Veal</option><option value="venison">Venison</option><option value="turkey">Turkey</option><option value="suet">Suet</option><option value="spam">Spam</option><option value="steak">Steak</option><option value="speck">Speck</option><option value="salami">Salami</option><option value="salame">Salame</option><option value="steaks">Steaks</option><option value="sirloin">Sirloin</option><option value="sausage">Sausage</option><option value="schmaltz">Schmaltz</option><option value="wings">Wings</option><option value="wiener">Wiener</option><option value="wieners">Wieners</option><option value="weisswurst">Weisswurst</option></optgroup><optgroup label="Produce"><option value="endive">Endive</option><option value="epazote">Epazote</option><option value="escarole">Escarole</option><option value="eggplant">Eggplant</option><option value="eggplants">Eggplants</option><option value="enokitake">Enokitake</option><option value="enokidake">Enokidake</option><option value="elderberry">Elderberry</option><option value="elderberries">Elderberries</option><option value="corn">Corn</option><option value="chard">Chard</option><option value="chile">Chile</option><option value="chili">Chili</option><option value="celery">Celery</option><option value="carrot">Carrot</option><option value="cherry">Cherry</option><option value="chives">Chives</option><option value="citron">Citron</option><option value="chilli">Chilli</option><option value="chilis">Chilis</option><option value="chiles">Chiles</option><option value="cabbage">Cabbage</option><option value="chayote">Chayote</option><option value="chicory">Chicory</option><option value="chesnut">Chesnut</option><option value="coconut">Coconut</option><option value="carrots">Carrots</option><option value="cassava">Cassava</option><option value="chilies">Chilies</option><option value="chillis">Chillis</option><option value="cabbages">Cabbages</option><option value="chayotes">Chayotes</option><option value="collards">Collards</option><option value="capsicum">Capsicum</option><option value="cucumber">Cucumber</option><option value="beet">Beet</option><option value="bael">Bael</option><option value="basil">Basil</option><option value="beets">Beets</option><option value="berry">Berry</option><option value="banana">Banana</option><option value="bananas">Bananas</option><option value="berries">Berries</option><option value="bilimbi">Bilimbi</option><option value="beetroot">Beetroot</option><option value="broccoli">Broccoli</option><option value="date">Date</option><option value="dates">Dates</option><option value="daikon">Daikon</option><option value="durian">Durian</option><option value="damsons">Damsons</option><option value="dragonfruit">Dragonfruit</option><option value="amla">Amla</option><option value="apple">Apple</option><option value="apples">Apples</option><option value="avocado">Avocado</option><option value="arugula">Arugula</option><option value="apricot">Apricot</option><option value="avocados">Avocados</option><option value="apricots">Apricots</option><option value="avocadoes">Avocadoes</option><option value="asparagus">Asparagus</option><option value="aubergine">Aubergine</option><option value="artichoke">Artichoke</option><option value="aubergines">Aubergines</option><option value="artichokes">Artichokes</option><option value="fig">Fig</option><option value="figs">Figs</option><option value="fruit">Fruit</option><option value="falsa">Falsa</option><option value="frisee">Frisee</option><option value="fennel">Fennel</option><option value="feijoa">Feijoa</option><option value="feijoas">Feijoas</option><option value="kuri">Kuri</option><option value="kiwi">Kiwi</option><option value="kale">Kale</option><option value="kaki">Kaki</option><option value="kiwis">Kiwis</option><option value="katuk">Katuk</option><option value="kumara">Kumara</option><option value="kesaur">Kesaur</option><option value="karela">Karela</option><option value="kabocha">Kabocha</option><option value="kumquat">Kumquat</option><option value="kangkong">Kangkong</option><option value="kohlrabi">Kohlrabi</option><option value="kumquats">Kumquats</option><option value="kiwifruit">Kiwifruit</option><option value="kiwifruits">Kiwifruits</option><option value="jicama">Jicama</option><option value="jackfruit">Jackfruit</option><option value="jarrahdale">Jarrahdale</option><option value="hominy">Hominy</option><option value="hokkaido">Hokkaido</option><option value="honeydew">Honeydew</option><option value="honewort">Honewort</option><option value="horseradish">Horseradish</option><option value="guava">Guava</option><option value="grape">Grape</option><option value="garlic">Garlic</option><option value="guavas">Guavas</option><option value="grapes">Grapes</option><option value="greens">Greens</option><option value="gigante">Gigante</option><option value="ginseng">Ginseng</option><option value="gigantes">Gigantes</option><option value="guajillo">Guajillo</option><option value="guajillos">Guajillos</option><option value="grapefruit">Grapefruit</option><option value="gooseberry">Gooseberry</option><option value="greenbeans">Greenbeans</option><option value="granadilla">Granadilla</option><option value="leek">Leek</option><option value="lime">Lime</option><option value="lemon">Lemon</option><option value="leeks">Leeks</option><option value="limes">Limes</option><option value="lychee">Lychee</option><option value="litchi">Litchi</option><option value="lemons">Lemons</option><option value="loquat">Loquat</option><option value="lychees">Lychees</option><option value="lettuce">Lettuce</option><option value="lettece">Lettece</option><option value="loquats">Loquats</option><option value="langsat">Langsat</option><option value="limonia">Limonia</option><option value="lotusroot">Lotusroot</option><option value="mint">Mint</option><option value="melon">Melon</option><option value="maize">Maize</option><option value="mango">Mango</option><option value="mache">Mache</option><option value="mÃ¢che">MÃ¢che</option><option value="mizuna">Mizuna</option><option value="manioc">Manioc</option><option value="manoic">Manoic</option><option value="morels">Morels</option><option value="mangos">Mangos</option><option value="mangold">Mangold</option><option value="mesclun">Mesclun</option><option value="mangoes">Mangoes</option><option value="mitsuba">Mitsuba</option><option value="marjoram">Marjoram</option><option value="mushroom">Mushroom</option><option value="mirlitons">Mirlitons</option><option value="plum">Plum</option><option value="pear">Pear</option><option value="peas">Peas</option><option value="plums">Plums</option><option value="peach">Peach</option><option value="pears">Pears</option><option value="pluot">Pluot</option><option value="pitaya">Pitaya</option><option value="papaya">Papaya</option><option value="pipian">Pipian</option><option value="pomelo">Pomelo</option><option value="pluots">Pluots</option><option value="potato">Potato</option><option value="parvar">Parvar</option><option value="parwar">Parwar</option><option value="parwal">Parwal</option><option value="phalsa">Phalsa</option><option value="peaches">Peaches</option><option value="parsley">Parsley</option><option value="poblano">Poblano</option><option value="papayas">Papayas</option><option value="parsnip">Parsnip</option><option value="pimento">Pimento</option><option value="peppers">Peppers</option><option value="pummelo">Pummelo</option><option value="pomelos">Pomelos</option><option value="pumpkin">Pumpkin</option><option value="palmyra">Palmyra</option><option value="pitahaya">Pitahaya</option><option value="plantain">Plantain</option><option value="poblanos">Poblanos</option><option value="parsnips">Parsnips</option><option value="pimiento">Pimiento</option><option value="pimentos">Pimentos</option><option value="pummelos">Pummelos</option><option value="nashi">Nashi</option><option value="nectarine">Nectarine</option><option value="nectarines">Nectarines</option><option value="okra">Okra</option><option value="okras">Okras</option><option value="onion">Onion</option><option value="onions">Onions</option><option value="orange">Orange</option><option value="oranges">Oranges</option><option value="oregano">Oregano</option><option value="quince">Quince</option><option value="quinces">Quinces</option><option value="ramps">Ramps</option><option value="ramson">Ramson</option><option value="rapini">Rapini</option><option value="rocket">Rocket</option><option value="radish">Radish</option><option value="rhubarb">Rhubarb</option><option value="romaine">Romaine</option><option value="rambutan">Rambutan</option><option value="rutabaga">Rutabaga</option><option value="radishes">Radishes</option><option value="romanesco">Romanesco</option><option value="radicchio">Radicchio</option><option value="rutabagas">Rutabagas</option><option value="vidalia">Vidalia</option><option value="vidalias">Vidalias</option><option value="vegetable">Vegetable</option><option value="thyme">Thyme</option><option value="tinda">Tinda</option><option value="turnip">Turnip</option><option value="tomato">Tomato</option><option value="tinday">Tinday</option><option value="tindas">Tindas</option><option value="turnips">Turnips</option><option value="tomatos">Tomatos</option><option value="tangelo">Tangelo</option><option value="tomatoes">Tomatoes</option><option value="tarragon">Tarragon</option><option value="tangelos">Tangelos</option><option value="tangerine">Tangerine</option><option value="tomatillo">Tomatillo</option><option value="tamarillo">Tamarillo</option><option value="tangerines">Tangerines</option><option value="tomatillos">Tomatillos</option><option value="swede">Swede</option><option value="squash">Squash</option><option value="swedes">Swedes</option><option value="sorrel">Sorrel</option><option value="sultana">Sultana</option><option value="shallot">Shallot</option><option value="sprouts">Sprouts</option><option value="spinach">Spinach</option><option value="sultanas">Sultanas</option><option value="scallion">Scallion</option><option value="sunchoke">Sunchoke</option><option value="shallots">Shallots</option><option value="watercress">Watercress</option><option value="watermelon">Watermelon</option><option value="yam">Yam</option><option value="yams">Yams</option><option value="yuca">Yuca</option><option value="yuzu">Yuzu</option><option value="yucca">Yucca</option><option value="zucchini">Zucchini</option><option value="zucchinis">Zucchinis</option></optgroup><optgroup label="Gourmet"><option value="escargot">Escargot</option><option value="caviar">Caviar</option><option value="aioli">Aioli</option><option value="hibiscus">Hibiscus</option><option value="guanciale">Guanciale</option><option value="nettle">Nettle</option><option value="nettles">Nettles</option><option value="rosebud">Rosebud</option><option value="rosewater">Rosewater</option><option value="snails">Snails</option><option value="saffron">Saffron</option></optgroup><optgroup label="Cheese"><option value="emmentaler">Emmentaler</option><option value="emmenthaler">Emmenthaler</option><option value="comte">Comte</option><option value="chevre">Chevre</option><option value="cojack">Cojack</option><option value="cheese">Cheese</option><option value="cheddar">Cheddar</option><option value="brie">Brie</option><option value="burrata">Burrata</option><option value="boursin">Boursin</option><option value="feta">Feta</option><option value="halumi">Halumi</option><option value="havarti">Havarti</option><option value="haloumi">Haloumi</option><option value="halloumi">Halloumi</option><option value="gouda">Gouda</option><option value="gruyere">Gruyere</option><option value="gorgonzola">Gorgonzola</option><option value="lancashire">Lancashire</option><option value="munster">Munster</option><option value="muenster">Muenster</option><option value="mozarella">Mozarella</option><option value="parmesan">Parmesan</option><option value="nabulsi">Nabulsi</option><option value="naboulsi">Naboulsi</option><option value="neufchatel">Neufchatel</option><option value="neufchÃ¢tel">NeufchÃ¢tel</option><option value="romano">Romano</option><option value="ricotta">Ricotta</option><option value="roquefort">Roquefort</option><option value="stilton">Stilton</option></optgroup><optgroup label="Seafood"><option value="cod">Cod</option><option value="crab">Crab</option><option value="clams">Clams</option><option value="catfish">Catfish</option><option value="cockles">Cockles</option><option value="codfish">Codfish</option><option value="crabmeat">Crabmeat</option><option value="crawfish">Crawfish</option><option value="crayfish">Crayfish</option><option value="bass">Bass</option><option value="bombil">Bombil</option><option value="belacan">Belacan</option><option value="baccala">Baccala</option><option value="bluefish">Bluefish</option><option value="branzini">Branzini</option><option value="branzino">Branzino</option><option value="fish">Fish</option><option value="flounder">Flounder</option><option value="flounders">Flounders</option><option value="fishsticks">Fishsticks</option><option value="hake">Hake</option><option value="halibut">Halibut</option><option value="herring">Herring</option><option value="haddock">Haddock</option><option value="herrings">Herrings</option><option value="grouper">Grouper</option><option value="gravlax">Gravlax</option><option value="groupers">Groupers</option><option value="gravadlax">Gravadlax</option><option value="lox">Lox</option><option value="lobster">Lobster</option><option value="lobsters">Lobsters</option><option value="mussels">Mussels</option><option value="mackerel">Mackerel</option><option value="mahimahi">Mahimahi</option><option value="monkfish">Monkfish</option><option value="pike">Pike</option><option value="prawn">Prawn</option><option value="porgy">Porgy</option><option value="perch">Perch</option><option value="prawns">Prawns</option><option value="porgies">Porgies</option><option value="pollock">Pollock</option><option value="pomfret">Pomfret</option><option value="octopus">Octopus</option><option value="oysters">Oysters</option><option value="redfish">Redfish</option><option value="rockfish">Rockfish</option><option value="tuna">Tuna</option><option value="tunny">Tunny</option><option value="trout">Trout</option><option value="turbot">Turbot</option><option value="tengra">Tengra</option><option value="tilapia">Tilapia</option><option value="scup">Scup</option><option value="sole">Sole</option><option value="scups">Scups</option><option value="squid">Squid</option><option value="sable">Sable</option><option value="shark">Shark</option><option value="skate">Skate</option><option value="sprats">Sprats</option><option value="shrimp">Shrimp</option><option value="salmon">Salmon</option><option value="shrimps">Shrimps</option><option value="snapper">Snapper</option><option value="seabass">Seabass</option><option value="sardine">Sardine</option><option value="snappers">Snappers</option><option value="sardines">Sardines</option><option value="scallops">Scallops</option><option value="seabream">Seabream</option><option value="whiting">Whiting</option><option value="whitefish">Whitefish</option><option value="whitebait">Whitebait</option></optgroup><optgroup label="Spices and Seasonings"><option value="clove">Clove</option><option value="cumin">Cumin</option><option value="cloves">Cloves</option><option value="cayenne">Cayenne</option><option value="chervil">Chervil</option><option value="charoli">Charoli</option><option value="cardamom">Cardamom</option><option value="cardamon">Cardamon</option><option value="cinnamon">Cinnamon</option><option value="baharat">Baharat</option><option value="berbere">Berbere</option><option value="dill">Dill</option><option value="dillweed">Dillweed</option><option value="alum">Alum</option><option value="anise">Anise</option><option value="aleppo">Aleppo</option><option value="amchur">Amchur</option><option value="ajwain">Ajwain</option><option value="amchoor">Amchoor</option><option value="aamchur">Aamchur</option><option value="aniseed">Aniseed</option><option value="allspice">Allspice</option><option value="asafetida">Asafetida</option><option value="asafoetida">Asafoetida</option><option value="furikake">Furikake</option><option value="hing">Hing</option><option value="herbs">Herbs</option><option value="ginger">Ginger</option><option value="gingerroot">Gingerroot</option><option value="lavang">Lavang</option><option value="mace">Mace</option><option value="methi">Methi</option><option value="pepper">Pepper</option><option value="paprika">Paprika</option><option value="nutmeg">Nutmeg</option><option value="rub">Rub</option><option value="rosemary">Rosemary</option><option value="vegeta">Vegeta</option><option value="tumeric">Tumeric</option><option value="turmeric">Turmeric</option><option value="s&p">S&p</option><option value="sage">Sage</option><option value="salt">Salt</option><option value="sumac">Sumac</option><option value="sazon">Sazon</option><option value="sesame">Sesame</option><option value="spices">Spices</option><option value="seasalt">Seasalt</option><option value="sea-salt">Sea-salt</option><option value="shichimi">Shichimi</option><option value="wasabi">Wasabi</option></optgroup><optgroup label="Baking"><option value="cocoa">Cocoa</option><option value="crisco">Crisco</option><option value="carmine">Carmine</option><option value="custard">Custard</option><option value="cornmeal">Cornmeal</option><option value="brioche">Brioche</option><option value="bisquick">Bisquick</option><option value="ace-K">Ace-K</option><option value="flax">Flax</option><option value="flour">Flour</option><option value="flaxseed">Flaxseed</option><option value="filberts">Filberts</option><option value="flaxmeal">Flaxmeal</option><option value="frosting">Frosting</option><option value="flaxseeds">Flaxseeds</option><option value="icing">Icing</option><option value="isomalt">Isomalt</option><option value="hazelnuts">Hazelnuts</option><option value="grits">Grits</option><option value="gelatin">Gelatin</option><option value="gelatine">Gelatine</option><option value="lard">Lard</option><option value="lactose">Lactose</option><option value="lactitol">Lactitol</option><option value="marzipan">Marzipan</option><option value="mannitol">Mannitol</option><option value="molasses">Molasses</option><option value="maltitol">Maltitol</option><option value="pectin">Pectin</option><option value="panela">Panela</option><option value="pignoli">Pignoli</option><option value="piecrust">Piecrust</option><option value="neotame">Neotame</option><option value="nonpareils">Nonpareils</option><option value="raisins">Raisins</option><option value="rebiana">Rebiana</option><option value="vanilla">Vanilla</option><option value="vanillin">Vanillin</option><option value="teff">Teff</option><option value="truvia">Truvia</option><option value="treacle">Treacle</option><option value="tapioca">Tapioca</option><option value="turbinado">Turbinado</option><option value="sugar">Sugar</option><option value="stevia">Stevia</option><option value="swerve">Swerve</option><option value="sucanat">Sucanat</option><option value="sucrose">Sucrose</option><option value="splenda">Splenda</option><option value="sorbitol">Sorbitol</option><option value="semolina">Semolina</option><option value="xylitol">Xylitol</option><option value="wheatmeal">Wheatmeal</option><option value="yeast">Yeast</option></optgroup><optgroup label="Canned and Jarred"><option value="capers">Capers</option><option value="cowpea">Cowpea</option><option value="broth">Broth</option><option value="broths">Broths</option><option value="bouillon">Bouillon</option><option value="anchovy">Anchovy</option><option value="anchovies">Anchovies</option><option value="applesauce">Applesauce</option><option value="alcaparrado">Alcaparrado</option><option value="kraut">Kraut</option><option value="khesari">Khesari</option><option value="gravy">Gravy</option><option value="gherkins">Gherkins</option><option value="mexicorn">Mexicorn</option><option value="passata">Passata</option><option value="olive">Olive</option><option value="olives">Olives</option><option value="verjus">Verjus</option><option value="verjuice">Verjuice</option><option value="stock">Stock</option><option value="soybeans">Soybeans</option></optgroup><optgroup label="Condiments"><option value="catsup">Catsup</option><option value="ketchup">Ketchup</option><option value="hotsauce">Hotsauce</option><option value="mayo">Mayo</option><option value="mustard">Mustard</option><option value="vegenaise">Vegenaise</option><option value="veganaise">Veganaise</option><option value="tabasco">Tabasco</option><option value="siracha">Siracha</option><option value="sriracha">Sriracha</option></optgroup><optgroup label="Refrigerated"><option value="crepes">Crepes</option><option value="crÃªpes">CrÃªpes</option><option value="biscuit">Biscuit</option><option value="biscuits">Biscuits</option><option value="agnolotti">Agnolotti</option><option value="hommus">Hommus</option><option value="hummus">Hummus</option><option value="guacamole">Guacamole</option><option value="ravioli">Ravioli</option><option value="raviolis">Raviolis</option><option value="tempeh">Tempeh</option></optgroup><optgroup label="Nuts"><option value="cashew">Cashew</option><option value="cashews">Cashews</option><option value="almond">Almond</option><option value="almonds">Almonds</option><option value="groundnut">Groundnut</option><option value="groundnuts">Groundnuts</option><option value="peanut">Peanut</option><option value="pecans">Pecans</option><option value="peanuts">Peanuts</option><option value="nuts">Nuts</option><option value="walnut">Walnut</option><option value="walnuts">Walnuts</option></optgroup><optgroup label="Cereal"><option value="cereal">Cereal</option><option value="allbran">Allbran</option><option value="all-bran">All-bran</option><option value="farina">Farina</option><option value="granola">Granola</option><option value="muesli">Muesli</option><option value="oats">Oats</option><option value="oatmeal">Oatmeal</option></optgroup><optgroup label="Frozen"><option value="caramel">Caramel</option><option value="froyo">Froyo</option><option value="fries">Fries</option><option value="fro-yo">Fro-yo</option><option value="ice">Ice</option><option value="icecream">Icecream</option><option value="hash">Hash</option><option value="hashbrowns">Hashbrowns</option><option value="gelato">Gelato</option><option value="mirepoix">Mirepoix</option><option value="tortelini">Tortelini</option><option value="tortelloni">Tortelloni</option><option value="tortellini">Tortellini</option><option value="sorbet">Sorbet</option><option value="sherbet">Sherbet</option></optgroup><optgroup label="Bakery/Bread"><option value="cupcake">Cupcake</option><option value="chapati">Chapati</option><option value="challah">Challah</option><option value="crostini">Crostini</option><option value="bun">Bun</option><option value="buns">Buns</option><option value="bagel">Bagel</option><option value="bread">Bread</option><option value="boule">Boule</option><option value="bagels">Bagels</option><option value="baguette">Baguette</option><option value="focacia">Focacia</option><option value="focaccia">Focaccia</option><option value="flatbread">Flatbread</option><option value="foccaccia">Foccaccia</option><option value="lavash">Lavash</option><option value="lahvash">Lahvash</option><option value="pita">Pita</option><option value="pitas">Pitas</option><option value="paratha">Paratha</option><option value="roll">Roll</option><option value="roti">Roti</option><option value="rolls">Rolls</option><option value="toast">Toast</option><option value="tortilla">Tortilla</option><option value="tortillas">Tortillas</option><option value="stuffing">Stuffing</option><option value="wrap">Wrap</option><option value="wraps">Wraps</option></optgroup><optgroup label="Savory Snacks"><option value="cracker">Cracker</option><option value="fritos">Fritos</option><option value="kettlecorn">Kettlecorn</option><option value="jerky">Jerky</option><option value="grissini">Grissini</option><option value="goldfish">Goldfish</option><option value="pretzel">Pretzel</option><option value="popcorn">Popcorn</option><option value="pepitas">Pepitas</option><option value="pretzels">Pretzels</option><option value="niger">Niger</option><option value="nyjer">Nyjer</option><option value="ricecake">Ricecake</option><option value="ricecakes">Ricecakes</option><option value="seeds">Seeds</option><option value="saltines">Saltines</option></optgroup><optgroup label="Oil, Vinegar, Salad Dressing"><option value="croutons">Croutons</option><option value="hollandaise">Hollandaise</option><option value="pam">Pam</option><option value="oil">Oil</option><option value="ranch">Ranch</option><option value="vinegar">Vinegar</option><option value="vinaigrette">Vinaigrette</option></optgroup><optgroup label="Pasta and Rice"><option value="beans">Beans</option><option value="bucatini">Bucatini</option><option value="dal">Dal</option><option value="drelli">Drelli</option><option value="ditilini">Ditilini</option><option value="ditalini">Ditalini</option><option value="anellini">Anellini</option><option value="angelhair">Angelhair</option><option value="fusili">Fusili</option><option value="fregola">Fregola</option><option value="fregula">Fregula</option><option value="freekeh">Freekeh</option><option value="fusilli">Fusilli</option><option value="fresine">Fresine</option><option value="farfalle">Farfalle</option><option value="fettucini">Fettucini</option><option value="fettucine">Fettucine</option><option value="fettuccini">Fettuccini</option><option value="fettuccine">Fettuccine</option><option value="gnocchi">Gnocchi</option><option value="gemelli">Gemelli</option><option value="garbanzos">Garbanzos</option><option value="lentils">Lentils</option><option value="legumes">Legumes</option><option value="linguine">Linguine</option><option value="linguini">Linguini</option><option value="matki">Matki</option><option value="macaroni">Macaroni</option><option value="pesto">Pesto</option><option value="pasta">Pasta</option><option value="penne">Penne</option><option value="pastina">Pastina</option><option value="polenta">Polenta</option><option value="noodle">Noodle</option><option value="noodles">Noodles</option><option value="orzo">Orzo</option><option value="orecchiette">Orecchiette</option><option value="quinoa">Quinoa</option><option value="rice">Rice</option><option value="ramen">Ramen</option><option value="rotini">Rotini</option><option value="risoni">Risoni</option><option value="rigatoni">Rigatoni</option><option value="tubeti">Tubeti</option><option value="tubetti">Tubetti</option><option value="tubetini">Tubetini</option><option value="tubettini">Tubettini</option><option value="salsa">Salsa</option><option value="spelt">Spelt</option><option value="shells">Shells</option><option value="ziti">Ziti</option></optgroup><optgroup label="Nut butters, Jams, and Honey"><option value="jam">Jam</option><option value="jelly">Jelly</option><option value="honey">Honey</option><option value="marmelade">Marmelade</option><option value="marmalade">Marmalade</option><option value="nutella">Nutella</option></optgroup>
+                            </select>
+                        </div>
+                        <div class="col-md-2 col-xs-2 col-sm-2" style="">
+                            <button id="ingredientSelectClear" class="btn btn-danger">Clear ingredients</button>
+                        </div>
+                        <div class="col-md-4 col-xs-4 col-sm-4" style="">
+                        </div>
+                        <div class="col-md-2 col-xs-2 col-sm-2" style="">
+                            <button id="ingredientsearch-search" class="btn btn-custom" style="width:100%">Search</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="recipeview" class="tab-pane in active full-height">
+                <!-- BEGIN RECIPE VIEW -->
+                <div class="row main-body">
+                    <div class="col-md-12 col-xs-12 col-sm-12" style="padding: 0;margin: 0;">
+                        <img src="../img/kitchencounter.jpg" style="width: 100%;">
+                    </div>
+                </div>
+                <div id="messageoverlay" class="full-height hidden" style="left: 0; top: 127px; position: absolute; width: 100%; background-color: grey; opacity: 0.7; text-align: center; vertical-align: middle; line-height: 500px; color: white; font-size:24px; z-index:9999">
+                    Loading recipes...
+                </div>
+                <!-- END RECIPE VIEW -->
+            </div>
+            <div id="grocerylist" class="tab-pane full-height">
+                <div class="row main-bar" style="height:9%">
+                    <div class="panel-body search-bar">
+                        <div class="col-md-2 col-xs-2 col-sm-2" style="">
+                            <button id="groceriesClearList" class="btn btn-danger">Clear shopping list</button>
+                        </div>
+                        <div class="col-md-2 col-xs-2 col-sm-2" style="">
+
+                        </div>
+                        <div class="col-md-4 col-xs-4 col-sm-4" style="">
+
+                        </div>
+
+                        <div class="col-md-4 col-xs-4 col-sm-4" style="text-align:right">
+                            <button id="groceries-add-ingredients" class="btn btn-custom">Add ingredients from last recipe to list</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6" style="text-align:center; border-right:1px solid black">
+                        <h3>Groceries in English</h3>
+                    </div>
+                    <div class="col-md-6 col-xs-6 col-sm-6" style="text-align:center">
+                        <h3>Groceries in <span id="language">{language}</span></h3>
+                    </div>
+                </div>
+                <div class="row" style="height:84%">
+                    <div class="col-md-6 col-xs-6 col-sm-6 full-height" style="border-right:1px solid black">
+                        <div id="groceries-english">
+                            <ul class="list-group">
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-xs-6 col-sm-6 full-height">
+                        <div id="groceries-translated">
+                            <ul class="list-group">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="border-top: 1px solid black;">
+                    <div class="col-md-3 col-xs-3 col-sm-3"></div>
+                    <div class="col-md-6 col-xs-6 col-sm-6" style="text-align: center;margin-top: 14px;font-weight: 700;">
+                        <span style="">Tap the groceries to highlight that you bought them!</span>
+                    </div>
+                    <div class="col-md-3 col-xs-3 col-sm-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

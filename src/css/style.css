@@ -1,0 +1,243 @@
+html {
+    height: 100%;
+}
+body {
+    /*When need body to scale change to min-height!*/
+    height: 100%;
+}
+
+/*dark #66101f*/
+/*light #9d7b81*/
+/*buttons #c6bfc0*/
+
+.full-height {
+    height: 100%;
+}
+
+.full-height > li {
+    height: 100%;
+    width: 33%;
+}
+
+#multiselectForm > div {
+    float:left;
+}
+
+.nav-tabs>li>a {
+    border-left: 1px solid black; !important;
+    border-right: 1px solid black; !important;
+    border-radius: 0;
+    margin-right: 0;
+    transform:skew(-25deg,0deg);
+    -ms-transform:skew(-25deg,0deg);
+    -webkit-transform:skew(-25deg,0deg);
+    border-bottom: 1px solid black;
+}
+
+.nav-tabs>li>a>img {
+    transform:skew(+25deg,0deg);
+    -ms-transform:skew(+25deg,0deg);
+    -webkit-transform:skew(+25deg,0deg);
+    bottom: 18px;
+}
+
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+    border-left: 1px solid black; !important;
+    border-right: 1px solid black; !important;
+    background-color: #66101f;
+}
+
+.tab-content {
+    height:83%;
+}
+
+.main-menu {
+    height:9%;
+    background-color: #9d7b81;
+
+}
+
+.main-menu > div:first-child {
+    border-bottom: 1px solid black;
+}
+
+.main-bar{
+    height:100%;
+    background-color: #66101f;
+    border-bottom: 1px solid black;
+}
+
+.nav-tabs {
+    border: 0;
+}
+
+.main-body{
+    height:98%;
+}
+
+.search-bar {
+    padding:0;
+    padding-top:12px;
+}
+
+.recipe-left-pane {
+    padding: 0;
+}
+
+.recipe-left-pane > div {
+    padding: 0;
+}
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 7px;
+}
+::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0,0,0,.5);
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
+}
+.badge {
+    display: inline-block;
+    min-width: 30px;
+    min-height: 30px;
+    padding: 9px 7px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1;
+    color: #fff;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    background-color: #777;
+    border-radius: 31px;
+}
+
+.recipe-short-description > button.btn {
+    display:block;
+    margin: auto;
+    margin-top: 15px;
+}
+
+#ingredientList {
+    max-height: 115px;
+    min-height: 115px;
+    overflow: hidden;
+    overflow-y: scroll;
+}
+.btn.focus, .btn:focus, .btn:hover {
+    color: white;
+}
+.recipe-short-description {
+    padding: 0 15px;
+}
+
+.highlighted {
+    background-color: #66101f;
+    color: white;
+}
+
+.highlighted:after {
+    content: "\2713 " !important;
+    position: absolute;
+    right: 10px;
+}
+
+.list-group-item:after {
+    content: "\f096";
+    position: absolute;
+    right: 10px;
+}
+
+#recipe-nav-next {
+    height:100%;
+    border-right: 1px solid black;
+    overflow:hidden;
+}
+
+#recipe-nav-prev {
+    height:100%;
+    overflow:hidden;
+}
+
+#recipe-nav-next > img, #recipe-nav-prev > img {
+    filter:blur(5px);
+}
+
+.nav-arrow {
+    position:absolute;
+    left:20%;
+    top:45%
+}
+
+#voicehelplist > li {
+    margin-top:20px;
+    font-weight: 600;
+}
+
+.step-description {
+    text-align: left;
+    padding: 10px 40px;
+    position:relative;
+    line-height: 1.8;
+}
+
+.ingredient-description {
+    position:absolute;
+    bottom:40px;
+    max-height: 160px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.nav>li>a:focus, .nav>li>a:hover {
+    background-color: #9d7b81;
+}
+
+#groceries-english, #groceries-translated {
+    overflow-y: scroll;
+    max-height: 99%;
+}
+
+
+.pagination>.active>a, .pagination>.active>a:focus, .pagination>.active>a:hover, .pagination>.active>span, .pagination>.active>span:focus, .pagination>.active>span:hover {
+    background-color: #66101f;
+    border-color: #66101f;
+}
+
+.pagination>li>a, .pagination>li>span {
+    color: #66101f;
+}
+
+.btn-custom {
+    background-color: #9d7b81;
+    color: white;
+}
+.modal-dialog {
+    width: 99%;
+    height: 99%;
+    margin: 5px;
+    padding: 5px;
+}
+
+.modal-content {
+    height: auto;
+    min-height: 100%;
+    border-radius: 0;
+}
+
+.modal-header {
+    border-bottom: 0;
+}
+.modal-footer {
+    border-top: 0;
+}
+
+.btn-custom-dark {
+    background-color: black;
+    color:white;
+}
+
+.btn-custom-red {
+    background-color: #66101f;
+    color: white;
+}
